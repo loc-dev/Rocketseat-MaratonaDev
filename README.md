@@ -1,4 +1,4 @@
-![Logo da MaratonaDev](../static/logo.png)
+![Logo da MaratonaDev](static/logo.png)
 
 É um caminho de entrar no mundo da programação, através das tecnologias mais modernas e ter acesso as melhores oportunidades do mercado.
 
