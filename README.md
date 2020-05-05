@@ -1,2 +1,1 @@
-# MaratonaDev
-### Rocketseat
+![Logo da MaratonaDev](static/logo.png)
