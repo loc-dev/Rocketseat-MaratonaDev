@@ -1,8 +1,8 @@
 {
-  "name": "Projeto_Doe",
+  "name": "projetodoe",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
