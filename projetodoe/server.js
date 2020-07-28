@@ -31,8 +31,14 @@ nunjucks.configure("./", {
     Significa a configuração da apresentação da página
 */
 server.get("/", function(req, res) {
-    const donors = []
-    return res.render("index.html", { donors })
+    db.query("SELECT * FROM donors", function (err, result) {
+        // Fluxo de Erro
+        if (err) return res.send("Erro de banco de dados.")
+
+        // Fluxo ideal
+        const donors = result.rows
+        return res.render("index.html", { donors })
+    })
 })
 
 /* 
