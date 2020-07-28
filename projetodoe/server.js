@@ -1,11 +1,20 @@
+// Configurando o Servidor
 const express = require("express")
 const server = express()
 
-/* Utilizando a funcionalidade Get, passando o parâmetro (/)
+// Configurando a Template Engine (Nunjucks)
+const nunjucks = require("nunjucks")
+nunjucks.configure("./", {
+    express: server
+})
+
+/* 
+    Utilizando a funcionalidade Get, para o parâmetro (/)
     com função de parâmetro Request : Requisição e Response : Respostas
+    Significa a configuração da apresentação da página
 */
 server.get("/", function(req, res) {
-    return res.send("ok, cheguei aqui com nodemon")
+    return res.render("index.html")
 })
 
 // Inserindo o valor 3000 (Porta) para acessar o nosso Servidor
