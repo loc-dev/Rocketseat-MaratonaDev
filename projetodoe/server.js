@@ -8,6 +8,16 @@ server.use(express.static('public'))
 // Habilitando o Body do Formulário
 server.use(express.urlencoded({ extended: true}))
 
+// Configurar a conexão com o Banco de dados
+const Pool = require('pg').Pool
+const db = new Pool({
+    user: 'postgres',
+    password: '0000',
+    host: 'localhost',
+    port: 5432,
+    database: 'projetodoe'
+})
+
 // Configurando a Template Engine (Nunjucks)
 const nunjucks = require("nunjucks")
 nunjucks.configure("./", {
@@ -15,32 +25,13 @@ nunjucks.configure("./", {
     noCache: true,
 })
 
-// Lista de Doadores (Array)
-const donors = [
-    {
-        name: "Diego Fernandes",
-        blood: "AB+"
-    },
-    {
-        name: "Cleiton Souza",
-        blood: "B+"
-    },    
-    {
-        name: "Robson Marques",
-        blood: "O+"
-    },    
-    {
-        name: "Mayk Brito",
-        blood: "A-"
-    },        
-]
-
 /* 
     Utilizando a funcionalidade Get, para o parâmetro (/)
     com função de parâmetro Request : Requisição e Response : Respostas
     Significa a configuração da apresentação da página
 */
 server.get("/", function(req, res) {
+    const donors = []
     return res.render("index.html", { donors })
 })
 
@@ -55,13 +46,26 @@ server.post("/", function(req, res) {
     const email = req.body.email
     const blood = req.body.blood
 
-    // Colecionando novos dados dentro do Array
-    donors.push({
-        name: name,
-        blood: blood,
+        // Fluxo de Erro
+    if (name == "" || email == "" || blood == "") {
+        return res.send("Todos os campos são obrigatórios.")
+    }
+        // Fluxo ideal
+    // Colecionando novos dados dentro do Banco de dados
+    const query = `
+        INSERT INTO donors ("name", "email", "blood")
+        VALUES ($1, $2, $3)`
+
+    const values = [name, email, blood]
+
+    db.query(query, values, function(err) {
+        // Fluxo de Erro
+        if (err) return res.send("Erro no Banco de dados.")
+
+        // Fluxo ideal
+        return res.redirect("/")
     })
 
-    return res.redirect("/")
 })
 
 // Inserindo o valor 3000 (Porta) para acessar o nosso Servidor
