@@ -17,6 +17,9 @@ server.get("/", function(req, res) {
     return res.render("index.html")
 })
 
+// Configurando o Servidor para apresentação dos arquivos estáticos
+server.use(express.static('public'))
+
 // Inserindo o valor 3000 (Porta) para acessar o nosso Servidor
 server.listen(3000, function() {
     console.log("iniciei o servidor.")
